@@ -5,6 +5,9 @@
 import os
 import random
 
+#test
+
+
 # Legend
 legend = [['A', 'Agent'], ['B', 'Breeze'], ['G', 'Gold'], ['OK', 'Safety'],
           ['P', 'Pit'], ['S', 'Stench'], ['?', '!Visited'], ['W', 'Wumpus']]
@@ -241,8 +244,17 @@ def checkNextroom():
     elif wumpusMap[nextPlayerPosition[0]-1][-1] == 'S':
         theWumpusSmellMessage()
         playerSurvival[0] = 1
-    elif wumpusMap[nextPlayerPosition[0]-1][-1] == 'B,G,S' or wumpusMap[nextPlayerPosition[0]-1][-1] == 'B,G' or wumpusMap[nextPlayerPosition[0]-1][-1] == 'G,S' or wumpusMap[nextPlayerPosition[0]-1][-1] == 'G':
-        goldRoomMessage()
+    elif wumpusMap[nextPlayerPosition[0]-1][-1] == 'B,G,S': 
+        goldRoomMessage(0)
+        playerSurvival[0] = 1
+    elif wumpusMap[nextPlayerPosition[0]-1][-1] == 'B,G':
+        goldRoomMessage(1)
+        playerSurvival[0] = 1
+    elif wumpusMap[nextPlayerPosition[0]-1][-1] == 'G,S': 
+        goldRoomMessage(2)
+        playerSurvival[0] = 1
+    elif wumpusMap[nextPlayerPosition[0]-1][-1] == 'G':
+        goldRoomMessage(3)
         playerSurvival[0] = 1
     elif wumpusMap[nextPlayerPosition[0]-1][-1] == 'P':
         pitDeathMessage()
@@ -362,38 +374,49 @@ def wallTryAgainMessage():
 
 # found treasure message
 
-def goldRoomMessage():
+def goldRoomMessage(clue):
     select = playerMoveCount[0] % 10
-    if select == 0:    
-        mapMessage[0] = "Wait ... Gold, a breeze, and a bad smell"
-        mapMessage[1] = "Get me outa here. (After picking up the gold)."
-    elif select == 1:
-        mapMessage[0] = "Found the Gold, it is cold and smells bad"
-        mapMessage[1] = "Get me outa here. (After picking up the gold)."
-    elif select == 2:
-        mapMessage[0] = "Gold, Gold, Gold"
-        mapMessage[1] = "Bad smell and its cold. Pickup the gold and go."
-    elif select == 3:
-        mapMessage[0] = "Why does the Gold have to bed in stinky breezy room."
-        mapMessage[1] = "Get me outa here. (After picking up the gold)."
-    elif select == 4:    
-        mapMessage[0] = "Gold, Oh Yeah. Smell Bad. Oh Yeah. And Breezy"
-        mapMessage[1] = "Oh Yeah.  Pick Gold and go.  Oh Yeah."
-    elif select == 5:
-        mapMessage[0] = "Smelly Gold, Oh Smelly Gold"
-        mapMessage[1] = "Cold and Breezy, and Let's get Outa Here."
-    elif select == 6:
-        mapMessage[0] = "What could be better than finding Gold?"
-        mapMessage[1] = "Maybe if it wasn't in a breezy stinky room!!!"
-    elif select == 7:
-        mapMessage[0] = "Smells like smeltering some gold we have here."
-        mapMessage[1] = "Cold and breezy also. Let's Gooooooo!!!"
-    elif select == 8:
-        mapMessage[0] = "Gold, Gold, and Smelly Gold.  And breezy too."
-        mapMessage[1] = "Get me outa here. (After picking up the gold)."    
-    elif select == 9:
-        mapMessage[0] = "Wait ... Gold, a breeze, and a bad smell"
-        mapMessage[1] = "Get me outa here. (After picking up the gold)."
+
+    if clue == 1: # 'B,G'
+        mapMessage[0] = "The air is cold and breezy ... Gold is near"
+        mapMessage[1] = "Let's pick it up. And get outta here."
+    elif clue == 2: # 'G,S'
+        mapMessage[0] = "Oh it smells ... Gold is near"
+        mapMessage[1] = "Let's pick it up. And get outta here."
+    elif clue == 3: # 'G'
+        mapMessage[0] = "Not a clue what's around me"
+        mapMessage[1] = "But here we have gold. Pick it up and go, go, go"
+    else: # 'B,G,S'
+        if select == 0:    
+            mapMessage[0] = "Wait ... Gold, a breeze, and a bad smell"
+            mapMessage[1] = "Get me outa here. (After picking up the gold)."
+        elif select == 1:
+            mapMessage[0] = "Found the Gold, it is cold and smells bad"
+            mapMessage[1] = "Get me outa here. (After picking up the gold)."
+        elif select == 2:
+            mapMessage[0] = "Gold, Gold, Gold"
+            mapMessage[1] = "Bad smell and its cold. Pickup the gold and go."
+        elif select == 3:
+            mapMessage[0] = "Why does the Gold have to bed in stinky breezy room."
+            mapMessage[1] = "Get me outa here. (After picking up the gold)."
+        elif select == 4:    
+            mapMessage[0] = "Gold, Oh Yeah. Smell Bad. Oh Yeah. And Breezy"
+            mapMessage[1] = "Oh Yeah.  Pick Gold and go.  Oh Yeah."
+        elif select == 5:
+            mapMessage[0] = "Smelly Gold, Oh Smelly Gold"
+            mapMessage[1] = "Cold and Breezy, and Let's get Outa Here."
+        elif select == 6:
+            mapMessage[0] = "What could be better than finding Gold?"
+            mapMessage[1] = "Maybe if it wasn't in a breezy stinky room!!!"
+        elif select == 7:
+            mapMessage[0] = "Smells like smeltering some gold we have here."
+            mapMessage[1] = "Cold and breezy also. Let's Gooooooo!!!"
+        elif select == 8:
+            mapMessage[0] = "Gold, Gold, and Smelly Gold.  And breezy too."
+            mapMessage[1] = "Get me outa here. (After picking up the gold)."    
+        elif select == 9:
+            mapMessage[0] = "Wait ... Gold, a breeze, and a bad smell"
+            mapMessage[1] = "Get me outa here. (After picking up the gold)."
 
 
 # found kill message
@@ -575,7 +598,12 @@ def ripDeathMessage():
     
 
 def pickupGold():
-    if wumpusMap[getPlayerPosition() - 1][-1] == 'B,G,S' or wumpusMap[nextPlayerPosition[0]-1][-1] == 'B,G' or wumpusMap[nextPlayerPosition[0]-1][-1] == 'G,S' or wumpusMap[nextPlayerPosition[0]-1][-1] == 'G,S':
+    if wumpusMap[getPlayerPosition() - 1][-1] == 'B,G,S' or wumpusMap[nextPlayerPosition[0]-1][-1] == 'B,G' or wumpusMap[nextPlayerPosition[0]-1][-1] == 'G,S':
+        mapMessage[0] = "Gold Picked Up."
+        mapMessage[1] = "Can we find the exit please?"
+        mapMessage[2] = ""
+        return 1
+    elif wumpusMap[nextPlayerPosition[0]-1][-1] == 'G': #made new entry to keep single line of code from being too long
         mapMessage[0] = "Gold Picked Up."
         mapMessage[1] = "Can we find the exit please?"
         mapMessage[2] = ""
@@ -599,7 +627,7 @@ def shootArrow():
             wumpusDead[0] = 1
             playerScore[0] = playerScore[0] - 10  # -10 for shooting arrow
             playerArrows[0] = 0
-        elif getPlayerRotation() ==62 and playerRow[0]==wumpusRow[0] and playerPosition[0] < wumpusRoom[0]: # < right
+        elif getPlayerRotation() ==62 and playerRow[0]==wumpusRow[0]: #and playerPosition[0] < wumpusRoom[0]: # > right
             mapMessage[0] = "A horrible sound chills your spine."
             mapMessage[1] = "The Wumpus has fallen!!!"
             wumpusDead[0] = 1
@@ -614,6 +642,8 @@ def shootArrow():
         else:
             mapMessage[0] = "Silence."
             mapMessage[1] = "Nothing but Silence."
+            mapMessage[3] = wumpusRow[0]
+            mapMessage[4] = playerArrows[0]
             playerScore[0] = playerScore[0] - 10  # -10 for shooting arrow
             playerArrows[0] = 0
 

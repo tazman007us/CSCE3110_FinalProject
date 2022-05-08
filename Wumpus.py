@@ -642,8 +642,6 @@ def shootArrow():
         else:
             mapMessage[0] = "Silence."
             mapMessage[1] = "Nothing but Silence."
-            mapMessage[3] = wumpusRow[0]
-            mapMessage[4] = playerRow[0]
             playerScore[0] = playerScore[0] - 10  # -10 for shooting arrow
             playerArrows[0] = 0
 

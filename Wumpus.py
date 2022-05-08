@@ -205,33 +205,32 @@ def getPlayerRotation():
     return playerRotation[0]
 
 
-def getPlayerPosition(): # set player row and column position as well as return player current room
-    if playerPosition[0] == 1 or playerPosition[0] == 2 or playerPosition[0] == 3 or playerPosition[0] == 4: # find column 1
-        playerColumn[0] = 1
-    if playerPosition[0] == 5 or playerPosition[0] == 6 or playerPosition[0] == 7 or playerPosition[0] == 8: # find column 2
-        playerColumn[0] = 2
-    if playerPosition[0] == 9 or playerPosition[0] == 10 or playerPosition[0] == 11 or playerPosition[0] == 12: # find column 3
-        playerColumn[0] = 3
-    if playerPosition[0] == 13 or playerPosition[0] == 14 or playerPosition[0] == 15 or playerPosition[0] == 16: # find column 4
-        playerColumn[0] = 4
-    if playerPosition[0] == 1 or playerPosition[0] == 5 or playerPosition[0] == 9 or playerPosition[0] == 13: # find row 1
-        playerRow[0] = 1
-    if playerPosition[0] == 2 or playerPosition[0] == 6 or playerPosition[0] == 10 or playerPosition[0] == 14: # find row 2
-        playerRow[0] = 2
-    if playerPosition[0] == 3 or playerPosition[0] == 7 or playerPosition[0] == 11 or playerPosition[0] == 15: # find row 3
-        playerRow[0] = 3
-    if playerPosition[0] == 4 or playerPosition[0] == 8 or playerPosition[0] == 12 or playerPosition[0] == 16: # find row 4
-        playerRow[0] = 4
+def getPlayerPosition(): 
     return playerPosition[0]
 
+def playerRowColumn():  # set player row and column position
+    if wumpusMap[getPlayerPosition()-1][0]==1 or wumpusMap[getPlayerPosition()-1][0]==2 or wumpusMap[getPlayerPosition()-1][0]==3 or wumpusMap[getPlayerPosition()-1][0]==4: # find column 1
+        playerColumn[0] = 1
+    if wumpusMap[getPlayerPosition()-1][0]==5 or wumpusMap[getPlayerPosition()-1][0]==6 or wumpusMap[getPlayerPosition()-1][0]==7 or wumpusMap[getPlayerPosition()-1][0]==8: # find column 2
+        playerColumn[0] = 2
+    if wumpusMap[getPlayerPosition()-1][0]==9 or wumpusMap[getPlayerPosition()-1][0]==10 or wumpusMap[getPlayerPosition()-1][0]==11 or wumpusMap[getPlayerPosition()-1][0]==12: # find column 3
+        playerColumn[0] = 3
+    if wumpusMap[getPlayerPosition()-1][0]==13 or wumpusMap[getPlayerPosition()-1][0]==14 or wumpusMap[getPlayerPosition()-1][0]==15 or wumpusMap[getPlayerPosition()-1][0]==16: # find column 4
+        playerColumn[0] = 4
+    if wumpusMap[getPlayerPosition()-1][0]==1 or wumpusMap[getPlayerPosition()-1][0]==5 or wumpusMap[getPlayerPosition()-1][0]==9 or wumpusMap[getPlayerPosition()-1][0]==13: # find row 1
+        playerRow[0] = 1
+    if wumpusMap[getPlayerPosition()-1][0]==2 or wumpusMap[getPlayerPosition()-1][0]==6 or wumpusMap[getPlayerPosition()-1][0]==10 or wumpusMap[getPlayerPosition()-1][0]==14: # find row 2
+        playerRow[0] = 2
+    if wumpusMap[getPlayerPosition()-1][0]==3 or wumpusMap[getPlayerPosition()-1][0]==7 or wumpusMap[getPlayerPosition()-1][0]==11 or wumpusMap[getPlayerPosition()-1][0]==15: # find row 3
+        playerRow[0] = 3
+    if wumpusMap[getPlayerPosition()-1][0]==4 or wumpusMap[getPlayerPosition()-1][0]==8 or wumpusMap[getPlayerPosition()-1][0]==12 or wumpusMap[getPlayerPosition()-1][0]==16: # find row 4
+        playerRow[0] = 4
 
 def getPlayerScore():
     return playerScore[0]
 
-
 def getPlayerArrows():
     return playerArrows[0]
-
 
 def checkNextroom():
     if wumpusMap[nextPlayerPosition[0]-1][-1] == 'B':
@@ -615,6 +614,7 @@ def pickupGold():
         return 0
 
 def shootArrow():
+        playerRowColumn()
         if getPlayerRotation() ==94 and playerColumn[0]==wumpusColumn[0] and playerPosition[0] < wumpusRoom[0]: # ^ up
             mapMessage[0] = "A loud scream fills the halls."
             mapMessage[1] = "You killed Wumpus!!!"
@@ -627,7 +627,7 @@ def shootArrow():
             wumpusDead[0] = 1
             playerScore[0] = playerScore[0] - 10  # -10 for shooting arrow
             playerArrows[0] = 0
-        elif getPlayerRotation() ==62 and playerRow[0]==wumpusRow[0]: #and playerPosition[0] < wumpusRoom[0]: # > right
+        elif getPlayerRotation() ==62 and playerRow[0]==wumpusRow[0] and playerPosition[0] < wumpusRoom[0]: # > right
             mapMessage[0] = "A horrible sound chills your spine."
             mapMessage[1] = "The Wumpus has fallen!!!"
             wumpusDead[0] = 1
@@ -643,7 +643,7 @@ def shootArrow():
             mapMessage[0] = "Silence."
             mapMessage[1] = "Nothing but Silence."
             mapMessage[3] = wumpusRow[0]
-            mapMessage[4] = playerArrows[0]
+            mapMessage[4] = playerRow[0]
             playerScore[0] = playerScore[0] - 10  # -10 for shooting arrow
             playerArrows[0] = 0
 
@@ -694,7 +694,6 @@ def option1():
 
 def option2():
     if playerClimb[0] == 0:
-        getPlayerPosition()
         mapMessage[0] = ""
         mapMessage[1] = ""
         mapMessage[2] = ""
@@ -806,7 +805,6 @@ def option4():
 
 def option5():
     if playerClimb[0] == 1:
-        getPlayerPosition()
         mapMessage[0] = ""
         mapMessage[1] = ""
         mapMessage[2] = ""

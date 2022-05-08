@@ -318,7 +318,7 @@ def getNextPlayerPosition():
     return nextPlayerPosition[0]        
 
 # find wumpusRoom
-def findWumpusRoom():
+def findWumpusRoom():   #finds the wumpusRoom and assigns row, column to Wumpus - used for shoot arrow
     count = 0
     while count < 16:
         if wumpusMap[count][-1] == 'W':
@@ -662,7 +662,7 @@ drawMap(mapMessage, roomItem)
 
 findWumpusRoom() #finds the wumpusRoom and assigns row, column to Wumpus - used for shoot arrow
 
-print('current map#: ' + str(mapNumber[0]))
+# print('current map#: ' + str(mapNumber[0]))
 
 menu_options = {
     1: 'Show Current Map State',
